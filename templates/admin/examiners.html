@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Examiners</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Manage Examiners</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        {% if examiners %}
+
+            {% for examiner in examiners %}
+
+                <div>
+                    <h3>{{ examiner["name"] }}</h3>
+
+                    <p>Email: {{ examiner["email"] }}</p>
+                    <p>Department: {{ examiner["department"] }}</p>
+                    <p>Status: {{ examiner["status"] }}</p>
+
+                    {% if examiner["status"] == "pending" %}
+
+                        <form method="POST"
+                        action="/admin/approve-examiner/{{ examiner['id'] }}">
+
+                            <button type="submit">
+                                Approve Examiner
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+                    <hr>
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No examiners registered yet.</p>
+
+        {% endif %}
+
+        <a href="/admin/dashboard" class="btn">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+</html>

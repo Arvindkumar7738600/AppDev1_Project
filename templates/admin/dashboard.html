@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Admin Dashboard</h1>
+        <p>Welcome, Administrator!</p>
+
+        <h3>System Information</h3>
+
+        <p>Total Courses: {{ total_courses }}</p>
+        <p>Total Examinations: {{ total_examinations }}</p>
+        <p>Total Examiners: {{ total_examiners }}</p>
+        <p>Total Students: {{ total_students }}</p>
+        <p>Total Examination Slots: {{ total_slots }}</p>
+        <p>Total Bookings: {{ total_bookings }}</p>
+
+        <hr>
+
+        <h3>Manage Portal</h3>
+
+        <p>
+            Pending Examiner Requests:
+            <strong>{{ pending_examiners }}</strong>
+        </p>
+
+        <a href="/admin/examiners" class="btn">
+            Manage Examiners
+        </a>
+
+        <a href="/logout" class="btn">
+            Logout
+        </a>
+
+    </div>
+
+</body>
+</html>
