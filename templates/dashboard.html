@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - EMP</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Welcome, {{ name }}</h1>
+
+        <h2>{{ role }} Dashboard</h2>
+
+        <p>You have successfully logged in.</p>
+
+        <a href="/logout" class="btn">Logout</a>
+
+    </div>
+
+</body>
+</html>
