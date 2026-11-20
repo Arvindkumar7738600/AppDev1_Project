@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rubric Form</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        {% if rubric %}
+            <h1>Edit Rubric</h1>
+        {% else %}
+            <h1>Add Rubric</h1>
+        {% endif %}
+
+        <form method="POST">
+
+            <label>Select Examination</label>
+
+            <select name="examination_id" required>
+
+                <option value="">Select Examination</option>
+
+                {% for exam in examinations %}
+
+                    <option value="{{ exam['id'] }}"
+                    {% if rubric and rubric['examination_id'] == exam['id'] %}
+                        selected
+                    {% endif %}>
+                        {{ exam['exam_name'] }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <input
+                type="text"
+                name="criterion_name"
+                placeholder="Criterion Name"
+                value="{{ rubric['criterion_name'] if rubric else '' }}"
+                required
+            >
+
+            <input
+                type="number"
+                name="maximum_marks"
+                placeholder="Maximum Marks"
+                min="1"
+                step="0.5"
+                value="{{ rubric['maximum_marks'] if rubric else '' }}"
+                required
+            >
+
+            <input
+                type="number"
+                name="weightage"
+                placeholder="Weightage"
+                min="0"
+                step="0.5"
+                value="{{ rubric['weightage'] if rubric else '0' }}"
+                required
+            >
+
+            <textarea
+                name="description"
+                placeholder="Description"
+                rows="4"
+            >{{ rubric['description'] if rubric else '' }}</textarea>
+
+            <button type="submit">
+                Save Rubric
+            </button>
+
+        </form>
+
+        <a href="/admin/rubrics" class="btn">
+            Back to Rubrics
+        </a>
+
+    </div>
+
+</body>
+</html>

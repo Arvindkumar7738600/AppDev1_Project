@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Examinations</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Manage Examinations</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        <a href="/admin/examinations/add" class="btn">
+            Add Examination
+        </a>
+
+        <hr>
+
+        {% if examinations %}
+
+            {% for exam in examinations %}
+
+                <h3>{{ exam["exam_name"] }}</h3>
+
+                <p>Course: {{ exam["course_code"] }} - {{ exam["course_name"] }}</p>
+
+                <p>Type: {{ exam["exam_type"] }}</p>
+
+                <p>Duration: {{ exam["duration"] }} minutes</p>
+
+                <p>Maximum Marks: {{ exam["maximum_marks"] }}</p>
+
+                <p>Status: {{ exam["status"] }}</p>
+
+                <p>Slot Creation:
+                    {{ exam["slot_creation_start"] }}
+                    to
+                    {{ exam["slot_creation_end"] }}
+                </p>
+
+                <p>Booking:
+                    {{ exam["booking_start"] }}
+                    to
+                    {{ exam["booking_end"] }}
+                </p>
+
+                <a href="/admin/examinations/edit/{{ exam['id'] }}"
+                   class="btn">
+                    Edit
+                </a>
+
+                <form method="POST"
+                      action="/admin/examinations/delete/{{ exam['id'] }}">
+
+                    <button type="submit">
+                        Delete
+                    </button>
+
+                </form>
+
+                <hr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No examinations available. Add an examination first.</p>
+
+        {% endif %}
+
+        <a href="/admin/dashboard" class="btn">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+</html>

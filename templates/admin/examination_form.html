@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Examination Form</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        {% if examination %}
+            <h1>Edit Examination</h1>
+        {% else %}
+            <h1>Add Examination</h1>
+        {% endif %}
+
+        <form method="POST">
+
+            <label>Select Course</label>
+
+            <select name="course_id" required>
+
+                <option value="">Select Course</option>
+
+                {% for course in courses %}
+
+                    <option value="{{ course['id'] }}"
+                    {% if examination and examination['course_id'] == course['id'] %}
+                        selected
+                    {% endif %}>
+                        {{ course['course_code'] }} - {{ course['course_name'] }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <input
+                type="text"
+                name="exam_name"
+                placeholder="Examination Name"
+                value="{{ examination['exam_name'] if examination else '' }}"
+                required
+            >
+
+            <label>Examination Type</label>
+
+            <select name="exam_type" required>
+
+                <option value="">Select Type</option>
+
+                {% for type in ['Viva', 'Practical', 'Project Demo', 'Assessment'] %}
+
+                    <option value="{{ type }}"
+                    {% if examination and examination['exam_type'] == type %}
+                        selected
+                    {% endif %}>
+                        {{ type }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <input
+                type="number"
+                name="duration"
+                placeholder="Duration in minutes"
+                min="1"
+                value="{{ examination['duration'] if examination else '' }}"
+                required
+            >
+
+            <input
+                type="number"
+                name="maximum_marks"
+                placeholder="Maximum Marks"
+                min="1"
+                value="{{ examination['maximum_marks'] if examination else '' }}"
+                required
+            >
+
+            <label>Slot Creation Start Date</label>
+            <input
+                type="date"
+                name="slot_creation_start"
+                value="{{ examination['slot_creation_start'] if examination else '' }}"
+                required
+            >
+
+            <label>Slot Creation End Date</label>
+            <input
+                type="date"
+                name="slot_creation_end"
+                value="{{ examination['slot_creation_end'] if examination else '' }}"
+                required
+            >
+
+            <label>Booking Start Date</label>
+            <input
+                type="date"
+                name="booking_start"
+                value="{{ examination['booking_start'] if examination else '' }}"
+                required
+            >
+
+            <label>Booking End Date</label>
+            <input
+                type="date"
+                name="booking_end"
+                value="{{ examination['booking_end'] if examination else '' }}"
+                required
+            >
+
+            <label>Examination Status</label>
+
+            <select name="status" required>
+
+                {% for status in ['draft', 'slot_creation', 'booking_open', 'closed', 'completed'] %}
+
+                    <option value="{{ status }}"
+                    {% if examination and examination['status'] == status %}
+                        selected
+                    {% elif not examination and status == 'draft' %}
+                        selected
+                    {% endif %}>
+                        {{ status.replace('_', ' ').title() }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button type="submit">
+                Save Examination
+            </button>
+
+        </form>
+
+        <a href="/admin/examinations" class="btn">
+            Back to Examinations
+        </a>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Rubrics</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Manage Examination Rubrics</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        <a href="/admin/rubrics/add" class="btn">
+            Add New Rubric
+        </a>
+
+        <hr>
+
+        {% if rubrics %}
+
+            {% for rubric in rubrics %}
+
+                <h3>{{ rubric["criterion_name"] }}</h3>
+
+                <p>Examination: {{ rubric["exam_name"] }}</p>
+
+                <p>Maximum Marks: {{ rubric["maximum_marks"] }}</p>
+
+                <p>Weightage: {{ rubric["weightage"] }}</p>
+
+                <p>Description: {{ rubric["description"] }}</p>
+
+                <a href="/admin/rubrics/edit/{{ rubric['id'] }}"
+                   class="btn">
+                    Edit
+                </a>
+
+                <form method="POST"
+                      action="/admin/rubrics/delete/{{ rubric['id'] }}">
+
+                    <button type="submit">
+                        Delete
+                    </button>
+
+                </form>
+
+                <hr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No rubrics created yet.</p>
+
+        {% endif %}
+
+        <a href="/admin/dashboard" class="btn">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+</html>

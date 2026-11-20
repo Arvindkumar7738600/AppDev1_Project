@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Courses</title>
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Manage Courses</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        <a href="/admin/courses/add" class="btn">
+            Add New Course
+        </a>
+
+        <hr>
+
+        {% if courses %}
+
+            {% for course in courses %}
+
+                <h3>{{ course["course_code"] }} - {{ course["course_name"] }}</h3>
+
+                <p>{{ course["description"] }}</p>
+
+                <p>Status: {{ course["status"] }}</p>
+
+                <a href="/admin/courses/edit/{{ course['id'] }}"
+                   class="btn">
+                    Edit
+                </a>
+
+                <form method="POST"
+                      action="/admin/courses/delete/{{ course['id'] }}">
+
+                    <button type="submit">
+                        Delete
+                    </button>
+
+                </form>
+
+                <hr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No courses available. Add your first course.</p>
+
+        {% endif %}
+
+        <a href="/admin/dashboard" class="btn">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+</html>
